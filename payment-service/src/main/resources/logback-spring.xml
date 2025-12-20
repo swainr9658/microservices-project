@@ -1,6 +1,6 @@
 <configuration>
 
-    <!-- Console appender (for local debugging) -->
+    <!-- Console logging -->
     <appender name="CONSOLE"
               class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <!-- AWS CloudWatch appender -->
+    <!-- AWS CloudWatch logging -->
     <appender name="CLOUDWATCH"
               class="ca.pjer.logback.AwsLogsAppender">
 
@@ -18,8 +18,8 @@
         <!-- Log stream -->
         <logStreamName>{hostname}</logStreamName>
 
-        <!-- AWS Region -->
-        <region>us-east-1</region>
+        <!-- ✅ CORRECT property -->
+        <awsRegion>us-east-1</awsRegion>
 
         <layout>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n</pattern>
