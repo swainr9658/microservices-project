@@ -36,7 +36,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
+	implementation 'software.amazon.awssdk:cloudwatchlogs'
+    implementation 'com.github.danielwegener:logback-cloudwatch-appender:0.3.0'
+	
 	// Micrometer Tracing
 	implementation 'io.micrometer:micrometer-tracing'
 	implementation 'io.micrometer:micrometer-tracing-bridge-brave'

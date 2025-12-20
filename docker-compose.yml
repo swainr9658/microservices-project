@@ -22,6 +22,7 @@ services:
       - eureka-server
     env_file:
       - .env
+
   order-service:
     build: ./order-service
     image: order-service
@@ -31,6 +32,7 @@ services:
       - eureka-server
     env_file:
       - .env
+
   payment-service:
     build: ./payment-service
     image: payment-service
@@ -40,6 +42,7 @@ services:
       - eureka-server
     env_file:
       - .env
+
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
