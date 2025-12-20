@@ -1,50 +1,42 @@
 services:
-  config-server:
-    build: ./config-server
-    image: config-server
-    ports:
-      - "8889:8888"
-
-  eureka-server:
-    build: ./eureka-server
-    image: eureka-server
-    ports:
-      - "8763:8761"
-    depends_on:
-      - config-server
-
   api-gateway:
     build: ./api-gateway
     image: api-gateway
     ports:
       - "9091:8080"
-    depends_on:
-      - eureka-server
     env_file:
       - .env
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-east-1
+        awslogs-group: microservices-logs
+        awslogs-stream: api-gateway
 
   order-service:
     build: ./order-service
     image: order-service
     ports:
       - "8081:8081"
-    depends_on:
-      - eureka-server
     env_file:
       - .env
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-east-1
+        awslogs-group: microservices-logs
+        awslogs-stream: order-service
 
   payment-service:
     build: ./payment-service
     image: payment-service
     ports:
       - "8083:8082"
-    depends_on:
-      - eureka-server
     env_file:
       - .env
-
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: zipkin
-    ports:
-      - "9411:9411"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-east-1
+        awslogs-group: microservices-logs
+        awslogs-stream: payment-service
