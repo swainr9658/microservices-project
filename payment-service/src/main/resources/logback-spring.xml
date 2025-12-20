@@ -1,34 +1,13 @@
 <configuration>
 
-    <!-- Console logging -->
-    <appender name="CONSOLE"
-              class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <!-- AWS CloudWatch logging -->
-    <appender name="CLOUDWATCH"
-              class="ca.pjer.logback.AwsLogsAppender">
-
-        <!-- Log group -->
+    <appender name="CLOUDWATCH" class="ca.pjer.logback.AwsLogsAppender">
         <logGroupName>/microservices/${spring.application.name}</logGroupName>
-
-        <!-- Log stream -->
-        <logStreamName>{hostname}</logStreamName>
-
-        <!-- ✅ CORRECT property -->
-        <awsRegion>us-east-1</awsRegion>
-
-        <layout>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n</pattern>
-        </layout>
+        <logStreamName>${HOSTNAME}</logStreamName>
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="CLOUDWATCH"/>
+        <appender-ref ref="CONSOLE"/>
     </root>
 
 </configuration>
