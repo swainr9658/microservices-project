@@ -18,11 +18,25 @@ pipeline {
             steps {
                 echo 'Building all services using Gradle...'
                 bat '''
-                cd api-gateway && gradlew clean build -x test
-                cd ../config-server && gradlew clean build -x test
-                cd ../eureka-server && gradlew clean build -x test
-                cd ../order-service && gradlew clean build -x test
-                cd ../payment-service && gradlew clean build -x test
+                cd config-server
+                gradlew.bat clean build -x test
+                cd ..
+
+                cd eureka-server
+                gradlew.bat clean build -x test
+                cd ..
+
+                cd api-gateway
+                gradlew.bat clean build -x test
+                cd ..
+
+                cd order-service
+                gradlew.bat clean build -x test
+                cd ..
+
+                cd payment-service
+                gradlew.bat clean build -x test
+                cd ..
                 '''
             }
         }
