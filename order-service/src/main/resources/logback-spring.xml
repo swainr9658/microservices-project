@@ -1,0 +1,14 @@
+<configuration>
+
+    <appender name="CLOUDWATCH" class="ca.pjer.logback.AwsLogsAppender">
+        <logGroupName>microservices-logs</logGroupName>
+        <logStreamName>${spring.application.name}</logStreamName>
+        <region>us-east-1</region>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CLOUDWATCH"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
