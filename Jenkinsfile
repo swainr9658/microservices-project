@@ -7,26 +7,27 @@ pipeline {
 
     stages {
 
+        stage('Stop Existing Containers') {
+            steps {
+                echo 'Stopping old containers (if any)...'
+                bat 'docker compose -p microservices-pipeline down || exit 0'
+            }
+        }
+
         stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
                 checkout scm
             }
         }
 
         stage('Verify AWS Credentials') {
             steps {
-                echo 'Verifying AWS access from Jenkins agent...'
-                bat '''
-                aws --version
-                aws sts get-caller-identity
-                '''
+                bat 'aws sts get-caller-identity'
             }
         }
 
         stage('Gradle Build') {
             steps {
-                echo 'Building all microservices...'
                 bat '''
                 cd api-gateway && gradlew clean build -x test
                 cd ../config-server && gradlew clean build -x test
@@ -39,18 +40,8 @@ pipeline {
 
         stage('Docker Compose Up') {
             steps {
-                echo 'Building images and starting containers...'
-                bat 'docker compose up -d --build'
+                bat 'docker compose -p microservices-pipeline up -d --build'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully'
-        }
-        failure {
-            echo 'Pipeline failed'
         }
     }
 }

@@ -31,6 +31,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
 	implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
+	
+	//Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //  OAuth2 Resource Server (JWT)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
 
     compileOnly 'org.projectlombok:lombok'
