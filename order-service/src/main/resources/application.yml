@@ -3,10 +3,9 @@ server:
 
 spring:
   application:
-    name: order-service
+    name: order-service   # REQUIRED for Eureka + Gateway
 
   datasource:
- #   url: jdbc:postgresql://localhost:5432/orders_db
     url: jdbc:postgresql://host.docker.internal:5432/order_db
     username: postgres
     password: admin
@@ -21,7 +20,6 @@ spring:
 
   data:
     redis:
- #     host: localhost
       host: host.docker.internal
       port: 6379
 
@@ -29,17 +27,27 @@ spring:
     serialization:
       write-dates-as-timestamps: false
 
-  # 🔴 REQUIRED FOR FEIGN + ZIPKIN
+  # REQUIRED FOR FEIGN + ZIPKIN METRICS
   cloud:
     openfeign:
       micrometer:
         enabled: true
 
+# ================================
+# EUREKA CONFIG (DOCKER SAFE)
+# ================================
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
+# ================================
+# ACTUATOR + ZIPKIN
+# ================================
 management:
   endpoints:
     web:
@@ -52,8 +60,11 @@ management:
 
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://zipkin:9411/api/v2/spans
 
+# ================================
+# RESILIENCE4J CONFIG
+# ================================
 resilience4j:
   circuitbreaker:
     instances:

@@ -3,10 +3,9 @@ server:
 
 spring:
   application:
-    name: payment-service   # ✅ REQUIRED (Eureka + Zipkin)
+    name: payment-service   # REQUIRED for Eureka + Gateway
 
   datasource:
- #   url: jdbc:postgresql://localhost:5432/paymentdb
     url: jdbc:postgresql://host.docker.internal:5432/paymentdb
     username: postgres
     password: admin
@@ -18,17 +17,20 @@ spring:
 
   data:
     redis:
- #     host: localhost
       host: host.docker.internal
       port: 6379
 
 # ================================
-# EUREKA CONFIG
+# EUREKA CONFIG (DOCKER SAFE)
 # ================================
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
 # ================================
 # ACTUATOR + MICROMETER + ZIPKIN
@@ -41,11 +43,11 @@ management:
 
   tracing:
     sampling:
-      probability: 1.0   # DEV only (100% tracing)
+      probability: 1.0   # DEV only
 
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://zipkin:9411/api/v2/spans
 
 # ================================
 # RESILIENCE4J CONFIGURATION
