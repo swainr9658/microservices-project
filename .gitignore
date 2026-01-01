@@ -1,2 +1,5 @@
 /.metadata/
 .env
+# Security keys
+**/private.pem
+**/*.pem
