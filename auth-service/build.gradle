@@ -45,7 +45,7 @@ dependencies {
 
     // Logging
     implementation 'org.springframework.boot:spring-boot-starter-logging'
-    //implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'

@@ -30,6 +30,7 @@ pipeline {
             steps {
                 bat '''
                 cd api-gateway && gradlew clean build -x test
+                cd ../auth-service && gradlew clean build -x test
                 cd ../config-server && gradlew clean build -x test
                 cd ../eureka-server && gradlew clean build -x test
                 cd ../order-service && gradlew clean build -x test
@@ -38,9 +39,9 @@ pipeline {
             }
         }
 
-        stage('Docker Compose Up') {
+        stage('Docker Compose Up (No Cache)') {
             steps {
-                bat 'docker compose -p microservices-pipeline up -d --build'
+                bat 'docker compose -p microservices-pipeline up -d --build --no-cache'
             }
         }
     }
