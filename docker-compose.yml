@@ -33,6 +33,10 @@ services:
       - "9091:8080"
     depends_on:
       - eureka-server
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: us-east-1
 
   # =========================
   # AUTH SERVICE (JWT ISSUER)
@@ -45,6 +49,10 @@ services:
       - "8084:8084"
     depends_on:
       - eureka-server
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: us-east-1
 
     # 🔐 JWT KEYS (PERSISTENT)
     volumes:
@@ -62,6 +70,10 @@ services:
     depends_on:
       - eureka-server
       - order-db
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: us-east-1
 
   # =========================
   # PAYMENT SERVICE
@@ -75,6 +87,10 @@ services:
     depends_on:
       - eureka-server
       - payment-db
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: us-east-1
 
   # =========================
   # ORDER DB (POSTGRES)

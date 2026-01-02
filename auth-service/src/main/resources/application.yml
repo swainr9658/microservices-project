@@ -22,6 +22,10 @@ eureka:
   instance:
     prefer-ip-address: true
 
+# 🔐 JWT signing key (AUTH SERVICE ONLY)
+jwt:
+  private-key-path: classpath:keys/private.pem
+
 management:
   endpoints:
     web:
