@@ -25,6 +25,7 @@ eureka:
 # 🔐 JWT signing key (AUTH SERVICE ONLY)
 jwt:
   private-key-path: classpath:keys/private.pem
+  public-key-path: classpath:keys/public.pem
 
 management:
   endpoints:
