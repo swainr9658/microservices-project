@@ -39,9 +39,15 @@ pipeline {
             }
         }
 
-        stage('Docker Compose Up (No Cache)') {
+        stage('Docker Compose Build (No Cache)') {
             steps {
-                bat 'docker compose -p microservices-pipeline up -d --build --no-cache'
+                bat 'docker compose -p microservices-pipeline build --no-cache'
+            }
+        }
+
+        stage('Docker Compose Up') {
+            steps {
+                bat 'docker compose -p microservices-pipeline up -d'
             }
         }
     }
