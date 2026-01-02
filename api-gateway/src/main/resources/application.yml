@@ -10,7 +10,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          public-key-location: classpath:public.pem
+          public-key-location: classpath:keys/public.pem
 
   cloud:
     gateway:

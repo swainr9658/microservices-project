@@ -39,7 +39,7 @@ services:
       AWS_REGION: us-east-1
 
   # =========================
-  # AUTH SERVICE (JWT ISSUER)
+  # AUTH SERVICE (HOST DB)
   # =========================
   auth-service:
     build: ./auth-service
@@ -49,15 +49,6 @@ services:
       - "8084:8084"
     depends_on:
       - eureka-server
-    environment:
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_REGION: us-east-1
-
-    # 🔐 JWT KEYS (PERSISTENT)
-    volumes:
-      - auth-jwt-keys:/app/keys
-
   # =========================
   # ORDER SERVICE
   # =========================
@@ -69,7 +60,6 @@ services:
       - "8081:8081"
     depends_on:
       - eureka-server
-      - order-db
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
@@ -86,41 +76,10 @@ services:
       - "8082:8082"
     depends_on:
       - eureka-server
-      - payment-db
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: us-east-1
-
-  # =========================
-  # ORDER DB (POSTGRES)
-  # =========================
-  order-db:
-    image: postgres:15
-    container_name: order-db
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_DB: order_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-    volumes:
-      - order-db-data:/var/lib/postgresql/data
-
-  # =========================
-  # PAYMENT DB (POSTGRES)
-  # =========================
-  payment-db:
-    image: postgres:15
-    container_name: payment-db
-    ports:
-      - "5434:5432"
-    environment:
-      POSTGRES_DB: paymentdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-    volumes:
-      - payment-db-data:/var/lib/postgresql/data
 
   # =========================
   # ZIPKIN
@@ -130,11 +89,3 @@ services:
     container_name: zipkin
     ports:
       - "9411:9411"
-
-# =========================
-# VOLUMES (PERSISTENT)
-# =========================
-volumes:
-  auth-jwt-keys:
-  order-db-data:
-  payment-db-data:
